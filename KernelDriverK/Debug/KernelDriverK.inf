@@ -8,7 +8,7 @@ Class=Sample ; TODO: edit Class
 ClassGuid={78A1C341-4539-11d3-B88D-00C04FAD5171} ; TODO: edit ClassGuid
 Provider=%ManufacturerName%
 CatalogFile=KernelDriverK.cat
-DriverVer= ; TODO: set DriverVer in stampinf property pages
+DriverVer = 09/24/2020,19.8.37.579
 PnpLockDown=1
 
 [DestinationDirs]
@@ -29,16 +29,17 @@ HKR,,Icon,,-5
 
 [SourceDisksFiles]
 KernelDriverK.sys  = 1,,
-WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll=1 ; make sure the number matches with SourceDisksNames
+;
+
 
 ;*****************************************
 ; Install Section
 ;*****************************************
 
 [Manufacturer]
-%ManufacturerName%=Standard,NT$ARCH$
+%ManufacturerName%=Standard,NTx86
 
-[Standard.NT$ARCH$]
+[Standard.NTx86]
 %KernelDriverK.DeviceDesc%=KernelDriverK_Device, Root\KernelDriverK ; TODO: edit hw-id
 
 [KernelDriverK_Device.NT]
@@ -68,15 +69,17 @@ AddReg=KernelDriverK_Device_CoInstaller_AddReg
 CopyFiles=KernelDriverK_Device_CoInstaller_CopyFiles
 
 [KernelDriverK_Device_CoInstaller_AddReg]
-HKR,,CoInstallers32,0x00010000, "WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll,WdfCoInstaller"
+;
+
 
 [KernelDriverK_Device_CoInstaller_CopyFiles]
-WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll
+;
+
 
 [KernelDriverK_Device.NT.Wdf]
 KmdfService =  KernelDriverK, KernelDriverK_wdfsect
 [KernelDriverK_wdfsect]
-KmdfLibraryVersion = $KMDFVERSION$
+KmdfLibraryVersion = 1.15
 
 [Strings]
 SPSVCINST_ASSOCSERVICE= 0x00000002

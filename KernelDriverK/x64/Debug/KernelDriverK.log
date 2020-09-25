@@ -1,0 +1,19 @@
+﻿  Building 'KernelDriverK' with toolset 'WindowsKernelModeDriver10.0' and the 'Universal' target platform.
+  Stamping x64\Debug\KernelDriverK.inf
+  Stamping [Version] section with DriverVer=09/24/2020,19.23.45.889
+  KernelDriverK.vcxproj -> D:\Users\richa\Desktop\Misc\Github Repositories\Memory-RW-Kernel-Driver\KernelDriverK\x64\Debug\KernelDriverK.sys
+  Driver is 'Universal'.
+  .........................
+  Signability test complete.
+  
+  Errors:
+  None
+  
+  Warnings:
+  None
+  
+  Catalog generation complete.
+  D:\Users\richa\Desktop\Misc\Github Repositories\Memory-RW-Kernel-Driver\KernelDriverK\x64\Debug\KernelDriverK\kerneldriverk.cat
+  Done Adding Additional Store
+  Successfully signed: D:\Users\richa\Desktop\Misc\Github Repositories\Memory-RW-Kernel-Driver\KernelDriverK\x64\Debug\KernelDriverK\kerneldriverk.cat
+  

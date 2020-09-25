@@ -1,0 +1,2 @@
+D:\Users\richa\Desktop\Misc\Github Repositories\Memory-RW-Kernel-Driver\KernelDriverK\Debug\KernelDriverK.sys
+D:\Users\richa\Desktop\Misc\Github Repositories\Memory-RW-Kernel-Driver\KernelDriverK\Debug\KernelDriverK.pdb
