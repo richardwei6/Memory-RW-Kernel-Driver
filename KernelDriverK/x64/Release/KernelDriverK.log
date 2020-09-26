@@ -1,6 +1,6 @@
 ﻿  Building 'KernelDriverK' with toolset 'WindowsKernelModeDriver10.0' and the 'Universal' target platform.
   Stamping x64\Release\KernelDriverK.inf
-  Stamping [Version] section with DriverVer=09/24/2020,19.34.43.556
+  Stamping [Version] section with DriverVer=09/25/2020,23.27.10.547
   entry.c
   KernelDriverK.vcxproj -> D:\Users\richa\Desktop\Misc\Github Repositories\Memory-RW-Kernel-Driver\KernelDriverK\x64\Release\KernelDriverK.sys
   Done Adding Additional Store

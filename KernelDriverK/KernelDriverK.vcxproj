@@ -160,10 +160,15 @@
     <FilesToPackage Include="$(TargetPath)" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="communication.h" />
+    <ClInclude Include="data.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="entry.h" />
+    <ClInclude Include="memory.h" />
+    <ClInclude Include="structs.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="communication.c" />
     <ClCompile Include="entry.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
