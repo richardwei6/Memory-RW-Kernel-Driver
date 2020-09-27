@@ -8,7 +8,7 @@ Class=Sample ; TODO: edit Class
 ClassGuid={78A1C341-4539-11d3-B88D-00C04FAD5171} ; TODO: edit ClassGuid
 Provider=%ManufacturerName%
 CatalogFile=KernelDriverK.cat
-DriverVer = 09/25/2020,23.27.10.547
+DriverVer = 09/26/2020,18.29.24.884
 PnpLockDown=1
 
 [DestinationDirs]

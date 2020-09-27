@@ -1,8 +1,11 @@
 
+#pragma warning (disable : 4022)
+
 #include "communication.h"
 #include "debug.h"
 #include "entry.h"
 #include "data.h"
+#include "memory.h"
 
 NTSTATUS IoControl(PDEVICE_OBJECT DeviceObject, PIRP Irp) {
 	UNREFERENCED_PARAMETER(DeviceObject);
@@ -14,14 +17,46 @@ NTSTATUS IoControl(PDEVICE_OBJECT DeviceObject, PIRP Irp) {
 	ULONG ControlCode = stack->Parameters.DeviceIoControl.IoControlCode;
 
 	if (ControlCode == IO_GET_CLIENTADDRESS) {
-		PULONG Output = (PULONG)Irp->AssociatedIrp.SystemBuffer;
-		*Output = csgoClientDLL;
+		PULONG Output = (PULONG)Irp->AssociatedIrp.SystemBuffer; // cast this to whatever you want to give back to usermode
+		*Output = csgoClientDLL; // set ouput to equal to content
 
 		DbgMsg("Client Address requested\n");
 		Status = STATUS_SUCCESS;
 		ByteIO = sizeof(*Output);
 	}
+	else if (ControlCode == IO_GET_ENGINEADDRESS) {
+		PULONG Output = (PULONG)Irp->AssociatedIrp.SystemBuffer;
+		*Output = csgoEngineDLL;
+
+		DbgMsg("Engine Address requested\n");
+
+		Status = STATUS_SUCCESS;
+		ByteIO = sizeof(*Output);
+	}
+	else if (ControlCode == IO_READVIRTUALMEMORY) {
+		PKERNEL_READ_REQUEST ReadInput = (PKERNEL_READ_REQUEST)Irp->AssociatedIrp.SystemBuffer;
+		PEPROCESS Process;
+
+		if (NT_SUCCESS(PsLookupProcessByProcessId(ReadInput->PID, &Process))) {
+			KernelReadVirtualMemory(Process, ReadInput->Address, ReadInput->pBuffer, ReadInput->Size);
+			Status = STATUS_SUCCESS;
+			ByteIO = sizeof(KERNEL_READ_REQUEST);
+		}
+	}
+	else if (ControlCode == IO_WRITEVIRTUALMEMORY) {
+		PKERNEL_WRITE_REQUEST WriteInput = (PKERNEL_WRITE_REQUEST)Irp->AssociatedIrp.SystemBuffer;
+		PEPROCESS Process;
+
+		if (NT_SUCCESS(PsLookupProcessByProcessId(WriteInput->PID, &Process))) {
+			KernelWriteVirtualMemory(Process, WriteInput->pBuffer, WriteInput->Address, WriteInput->Size);
+			Status = STATUS_SUCCESS;
+			ByteIO = sizeof(KERNEL_WRITE_REQUEST);
+		}
+	}
 	else {
+
+		DbgMsg("Invalid IO Code called: %d", ControlCode);
+
 		ByteIO = 0;
 	}
 

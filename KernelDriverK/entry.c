@@ -13,16 +13,16 @@ NTKERNELAPI NTSTATUS PsLookupProcessByProcessId(
 );
 
 PLOAD_IMAGE_NOTIFY_ROUTINE ImageLoadCallBack(PUNICODE_STRING FullImageName, HANDLE ProcessID, PIMAGE_INFO ImageInfo) { // get address of dll if it getse loaded.
-	DbgMsg("ImageLoaded: %ls \n", FullImageName->Buffer);
+	//DbgMsg("ImageLoaded: %ls \n", FullImageName->Buffer);
 
 	if (wcsstr(FullImageName->Buffer, L"\\Counter-Strike Global Offensive\\csgo\\bin\\client.dll")){ // input dll (client.dll) path
-		DbgMsg("found client.dll");
+		DbgMsg("found client.dll at %d", ImageInfo->ImageBase);
 		csgoClientDLL = ImageInfo->ImageBase;
 
 		DbgMsg("PID: %d \n", ProcessID);
 	}
 	else if (wcsstr(FullImageName->Buffer, L"\\Counter-Strike Global Offensive\\bin\\engine.dll")) { // input dll (engine.dll) path
-		DbgMsg("found engine.dll");
+		DbgMsg("found engine.dll at %d", ImageInfo->ImageBase);
 		csgoEngineDLL = ImageInfo->ImageBase;
 
 		DbgMsg("PID: %d \n", ProcessID);
@@ -41,7 +41,7 @@ NTSTATUS DriverEntry(PDRIVER_OBJECT pDriverObject, PUNICODE_STRING pRegistryPath
 	PsSetLoadImageNotifyRoutine(ImageLoadCallBack);
 
 	RtlInitUnicodeString(&dev, L"\\Device\\KernelDriverK");
-	RtlInitUnicodeString(&dos, L"\\DosDeevices\\KernelDriverK");
+	RtlInitUnicodeString(&dos, L"\\DosDevices\\KernelDriverK");
 
 	IoCreateDevice(pDriverObject, 0, &dev, FILE_DEVICE_UNKNOWN, FILE_DEVICE_SECURE_OPEN, FALSE, &pDeviceObject);
 	IoCreateSymbolicLink(&dos, &dev);
