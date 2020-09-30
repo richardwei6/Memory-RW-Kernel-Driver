@@ -33,9 +33,23 @@ NTSTATUS IoControl(PDEVICE_OBJECT DeviceObject, PIRP Irp) {
 		Status = STATUS_SUCCESS;
 		ByteIO = sizeof(*Output);
 	}
+	else if (ControlCode == IO_GET_PID) {
+		PULONG Output = (PULONG)Irp->AssociatedIrp.SystemBuffer;
+		*Output = PID;
+
+		DbgMsg("PID requested\n");
+
+		Status = STATUS_SUCCESS;
+		ByteIO = sizeof(*Output);
+	}
 	else if (ControlCode == IO_READVIRTUALMEMORY) {
 		PKERNEL_READ_REQUEST ReadInput = (PKERNEL_READ_REQUEST)Irp->AssociatedIrp.SystemBuffer;
 		PEPROCESS Process;
+
+		/*DbgMsg("PID %d", ReadInput->PID);
+		DbgMsg("Reading memory %d", ReadInput->Address);
+		DbgMsg("Buffer %d", ReadInput->pBuffer);
+		DbgMsg("Reading mem size %d", ReadInput->Size);*/
 
 		if (NT_SUCCESS(PsLookupProcessByProcessId(ReadInput->PID, &Process))) {
 			KernelReadVirtualMemory(Process, ReadInput->Address, ReadInput->pBuffer, ReadInput->Size);
@@ -46,6 +60,8 @@ NTSTATUS IoControl(PDEVICE_OBJECT DeviceObject, PIRP Irp) {
 	else if (ControlCode == IO_WRITEVIRTUALMEMORY) {
 		PKERNEL_WRITE_REQUEST WriteInput = (PKERNEL_WRITE_REQUEST)Irp->AssociatedIrp.SystemBuffer;
 		PEPROCESS Process;
+
+		//DbgMsg("writing memory");
 
 		if (NT_SUCCESS(PsLookupProcessByProcessId(WriteInput->PID, &Process))) {
 			KernelWriteVirtualMemory(Process, WriteInput->pBuffer, WriteInput->Address, WriteInput->Size);

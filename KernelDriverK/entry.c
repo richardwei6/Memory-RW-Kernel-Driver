@@ -18,13 +18,13 @@ PLOAD_IMAGE_NOTIFY_ROUTINE ImageLoadCallBack(PUNICODE_STRING FullImageName, HAND
 	if (wcsstr(FullImageName->Buffer, L"\\Counter-Strike Global Offensive\\csgo\\bin\\client.dll")){ // input dll (client.dll) path
 		DbgMsg("found client.dll at %d", ImageInfo->ImageBase);
 		csgoClientDLL = ImageInfo->ImageBase;
-
+		PID = ProcessID;
 		DbgMsg("PID: %d \n", ProcessID);
 	}
 	else if (wcsstr(FullImageName->Buffer, L"\\Counter-Strike Global Offensive\\bin\\engine.dll")) { // input dll (engine.dll) path
 		DbgMsg("found engine.dll at %d", ImageInfo->ImageBase);
 		csgoEngineDLL = ImageInfo->ImageBase;
-
+		PID = ProcessID;
 		DbgMsg("PID: %d \n", ProcessID);
 	}
 
