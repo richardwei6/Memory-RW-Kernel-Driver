@@ -1,3 +1,2 @@
 # Memory-RW-Kernel-Driver
- Windows kernel driver for reading and writing virtual memory.
-Codename: K
+Simple Windows kernel driver for reading and writing virtual memory.
